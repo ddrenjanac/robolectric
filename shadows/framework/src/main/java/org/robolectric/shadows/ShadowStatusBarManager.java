@@ -1,6 +1,7 @@
 package org.robolectric.shadows;
 
 import static android.os.Build.VERSION_CODES.M;
+import static android.os.Build.VERSION_CODES.Q;
 
 import android.app.StatusBarManager;
 import org.robolectric.annotation.Implementation;
@@ -24,6 +25,22 @@ public class ShadowStatusBarManager {
   protected void disable2(int what) {
     disabled2 = what;
   }
+
+  // BEGIN-NTERNAL
+  /**
+   * Enable or disable status bar elements (notifications, clock) which are inappropriate during
+   * device setup.
+   *
+   * @param disabled whether to apply or remove the disabled flags
+   */
+  @Implementation(minSdk = Q)
+  public void setDisabledForSetup(boolean disabled) {
+    disable(
+        disabled ? StatusBarManager.DEFAULT_SETUP_DISABLE_FLAGS : StatusBarManager.DISABLE_NONE);
+    disable2(
+        disabled ? StatusBarManager.DEFAULT_SETUP_DISABLE2_FLAGS : StatusBarManager.DISABLE2_NONE);
+  }
+  // END-INTERNAL
 
   /** Returns the disable flags previously set in {@link #disable}. */
   public int getDisableFlags() {
