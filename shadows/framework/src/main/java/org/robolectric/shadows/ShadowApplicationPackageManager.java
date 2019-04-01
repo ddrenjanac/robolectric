@@ -1091,6 +1091,11 @@ public class ShadowApplicationPackageManager extends ShadowPackageManager {
     return intent;
   }
 
+  @Implementation(minSdk = LOLLIPOP)
+  protected Intent getLeanbackLaunchIntentForPackage(String packageName) {
+    return getLaunchIntentForPackage(packageName);
+  }
+
   ////////////////////////////
 
   @Implementation(minSdk = N)
