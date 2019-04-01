@@ -60,6 +60,11 @@ public abstract class ShadowBaseLooper {
   public abstract void idleIfPaused();
 
   /**
+   * Returns true if looper is currently idle.
+   */
+  public abstract boolean isIdle();
+
+  /**
    * Pause the looper.
    *
    * Has no practical effect for realistic looper, since it is always paused.
